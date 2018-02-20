@@ -1,0 +1,153 @@
+<html>
+<head>
+<title>My first Three.js app</title>
+<!-- <style>canvas { width: 100%; height: 100% }</style> -->
+</head>
+<body>
+<script src="js/three.min.js"></script>
+<script>
+var scene = new THREE.Scene();
+var camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 1, 100000);
+camera.position.z = 500;
+camera.position.y = -700;
+camera.rotation.x = 1.1;
+
+var renderer = new THREE.WebGLRenderer();
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
+var geometry = new THREE.BoxGeometry(300,300,300,7,7,7);
+var cubeMaterials = [
+    new THREE.MeshBasicMaterial({color:0xff0000}),
+    new THREE.MeshBasicMaterial({color:0x00ff00}),
+    new THREE.MeshBasicMaterial({color:0x0000ff}),
+    new THREE.MeshBasicMaterial({color:0xffff00}),
+    new THREE.MeshBasicMaterial({color:0xff00ff}),
+    new THREE.MeshBasicMaterial({color:0x00ffff}),
+];
+var material = new THREE.MeshFaceMaterial(cubeMaterials);
+var cube = new THREE.Mesh(geometry, material);
+
+
+
+var leftWall=new THREE.Mesh(
+  new THREE.PlaneGeometry(2000,1000,3,3),
+  new THREE.MeshBasicMaterial({color:0xffffff,wireframe:false, wireframeLinewidth: 6})
+);
+scene.add(leftWall);
+leftWall.rotation.y=1.6;
+leftWall.rotation.x=1.54;
+leftWall.position.z=400;
+leftWall.position.y=-200;
+leftWall.position.x=-600;
+
+
+
+var rightWall=new THREE.Mesh(
+  new THREE.PlaneGeometry(2000,1000,3,3),
+  new THREE.MeshBasicMaterial({color:0xffffff,wireframe:false, wireframeLinewidth: 6})
+);
+scene.add(rightWall);
+rightWall.rotation.y=-1.6;
+rightWall.rotation.x=-1.54;
+rightWall.position.z=400;
+rightWall.position.y=-360;
+rightWall.position.x=+600;
+
+
+var backWall=new THREE.Mesh(
+  new THREE.PlaneGeometry(2000,1000,3,3),
+  new THREE.MeshBasicMaterial({color:0xffffff,wireframe:false, wireframeLinewidth: 6})
+);
+scene.add(backWall);
+// backWall.rotation.y=0.6;
+backWall.rotation.x=1.58;
+backWall.position.z=400;
+backWall.position.y=720;
+// backWall.position.x=+600;
+
+
+
+
+
+scene.add(cube);
+cube.position.y=200;
+cube.position.z=0;
+
+[right,left,up,down,index]=[0,0,0,0,0]
+// camera.position.w = 500 ;
+this.addEventListener("keypress", keyDownHandler.bind(this), true);
+function render() {
+
+
+  !index && right  && (cube.position.x+=7) && (cube.rotation.y +=this.de2ra(0.0333));
+  !index && left   && (cube.position.x-=7) && (cube.rotation.y +=this.de2ra(-0.0333));
+
+
+  index && right && (cube.position.x+=7) && (cube.rotation.z +=this.de2ra(0.0333));
+  index && left  && (cube.position.x-=7) && (cube.rotation.z +=this.de2ra(-0.03));
+
+
+  up && (cube.position.y+=7) && (cube.rotation.x +=this.de2ra(-0.0333));
+  down && (cube.position.y-=7) && (cube.rotation.x +=this.de2ra(0.0333));
+
+  // if(up===1){
+  //   cube.rotation.x +=this.de2ra(0.0333);
+  //
+  //   // cube.rotation.x += 0.026;
+  //   cube.position.y-=7;
+  //   // cube.rotation.y += 0.03;
+  //
+  // }
+  // console.log(render,"fffffffffffffff");
+requestAnimationFrame(render);;
+
+// meshFloor.rotation.x += 0.02;
+renderer.render(scene, camera);
+};
+render();
+
+
+
+
+
+this.de2ra = function(degree)   { return degree*(Math.PI/4); }
+
+function keyDownHandler(event) {
+          // console.log(cube.rotation.x);
+         // get which key the user pressed
+  var key = event.which;
+    switch (key) {
+      case 97: // left key A
+        left=1;
+        setTimeout(function () {
+          left=0;
+        },1000)
+      break;
+
+      case 100: // right key D
+        right=1;
+        setTimeout(function () {
+          right=0;
+        },1000)
+      break;
+
+       case 119: // up key W
+         if(index===1){index=0}else{index=1}
+         up=1;
+         setTimeout(function () {
+           up=0;
+         },1000)
+       break;
+
+       case 115: // down key S
+         if(index===1){index=0}else{index=1}
+         down=1;
+         setTimeout(function () {
+           down=0;
+         },1000)
+      break;
+   }
+}
+</script>
+</body>
+</html>
