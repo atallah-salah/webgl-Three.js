@@ -11,6 +11,7 @@ or
 - clone it
 - open index.html in browser
 
+
 - w : to move forward
 - s : to return back
 - a : to move left
