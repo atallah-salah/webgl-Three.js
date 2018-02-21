@@ -8,8 +8,8 @@ to use it
 
 or
 
--clone it
--open index.html in browser
+- clone it
+- open index.html in browser
 
 - w : to move forward
 - s : to return back
